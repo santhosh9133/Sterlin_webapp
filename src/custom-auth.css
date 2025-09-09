@@ -1,0 +1,57 @@
+/* Custom CSS to remove orange background lines from login and register forms */
+.login-wrapper.login-new {
+  background-image: none !important;
+  background: #f8f9fa !important;
+}
+
+/* Alternative: Use a solid color background instead of the image */
+.main-wrapper .account-content .login-wrapper.login-new {
+  background-image: none !important;
+  background-color: #e3f5f1 !important;
+}
+
+/* Hover effects for input fields */
+.login-wrapper .login-content .form-control,
+.login-wrapper .login-content input[type="text"],
+.login-wrapper .login-content input[type="email"],
+.login-wrapper .login-content input[type="password"] {
+  transition: all 0.3s ease;
+  border: 1px solid #e1e5e9;
+}
+
+.login-wrapper .login-content .form-control:hover,
+.login-wrapper .login-content input[type="text"]:hover,
+.login-wrapper .login-content input[type="email"]:hover,
+.login-wrapper .login-content input[type="password"]:hover {
+  border-color: #4a785f;
+  box-shadow: 0 0 0 0.2rem rgba(74, 120, 95, 0.1);
+  transform: translateY(-1px);
+}
+
+.login-wrapper .login-content .form-control:focus,
+.login-wrapper .login-content input[type="text"]:focus,
+.login-wrapper .login-content input[type="email"]:focus,
+.login-wrapper .login-content input[type="password"]:focus {
+  border-color: #4a785f;
+  box-shadow: 0 0 0 0.2rem rgba(74, 120, 95, 0.25);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+/* Input group hover effects */
+.login-wrapper .login-content .input-group:hover .form-control {
+  border-color: #4a785f;
+}
+
+.login-wrapper .login-content .input-group:hover .input-group-text {
+  border-color: #4a785f;
+  background-color: rgba(74, 120, 95, 0.05);
+  transition: all 0.3s ease;
+}
+
+/* Button hover enhancement */
+.login-wrapper .login-content .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(74, 120, 95, 0.3);
+  transition: all 0.3s ease;
+}

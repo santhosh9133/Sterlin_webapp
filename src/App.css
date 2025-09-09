@@ -1,0 +1,61 @@
+#root {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0rem;
+  text-align: center;
+  background-color: #e3f5f1;
+}
+.employee-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px; /* space between cards */
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+
+.read-the-docs {
+  color: #888;
+}
+
+/* inpud feqalds grid */
+
+.new-employee-field .row,
+.other-info .row,
+.pass-info .row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+  gap: 20px; /* space between fields */
+}
+
+.new-employee-field .mb-3,
+.other-info .mb-3,
+.pass-info .input-blocks {
+  width: 100%;
+}

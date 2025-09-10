@@ -8,13 +8,13 @@ const Header = () => {
 				<div className="main-header">
 	
 					<div className="header-left active">
-					<Link to="/" className="logo logo-normal">
+					<Link to="#" className="logo logo-normal">
 						<img src="assets/img/image.png" alt="Img" style={{height:"50px", width:"60px"}} />
 					</Link>
-					<Link to="/" className="logo logo-white">
+					<Link to="#" className="logo logo-white">
 						<img src="assets/img/logo-white.svg" alt="Img" />
 					</Link>
-					<Link to="/" className="logo-small">
+					<Link to="#" className="logo-small">
 						<img src="assets/img/logo-small.png" alt="Img" />
 					</Link>
 				</div>
@@ -357,7 +357,7 @@ const Header = () => {
 						<div className="dropdown-menu dropdown-menu-right">
 							<a className="dropdown-item" href="profile.html">My Profile</a>
 							<a className="dropdown-item" href="general-settings.html">Settings</a>
-							<a className="dropdown-item" href="signin.html">Logout</a>
+							<Link className="dropdown-item" to={"/login"}>Logout</Link>
 						</div>
 					</div>
 					{/* <!-- /Mobile Menu --> */}

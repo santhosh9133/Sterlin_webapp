@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const AddEmployee = () => {
+	const [showPassword, setShowPassword] = useState(false);
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 	const [formData, setFormData] = useState({
 		firstName: '',
 		lastName: '',
@@ -115,6 +117,43 @@ const AddEmployee = () => {
 
 		console.log('Form submitted. Selected image:', selectedImage);
 
+		// Validate required fields
+		const requiredFields = {
+			firstName: 'First Name',
+			lastName: 'Last Name',
+			email: 'Email',
+			contactNumber: 'Contact Number',
+			empCode: 'Employee Code',
+			dateOfBirth: 'Date of Birth',
+			joiningDate: 'Joining Date',
+			password: 'Password'
+		};
+
+		const missingFields = [];
+		for (const [field, label] of Object.entries(requiredFields)) {
+			if (!formData[field] || formData[field].trim() === '') {
+				missingFields.push(label);
+			}
+		}
+
+		if (missingFields.length > 0) {
+			alert(`Please fill in the following required fields: ${missingFields.join(', ')}`);
+			return;
+		}
+
+		// Validate email format
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!emailRegex.test(formData.email)) {
+			alert('Please enter a valid email address');
+			return;
+		}
+
+		// Validate password strength
+		if (formData.password.length < 6) {
+			alert('Password must be at least 6 characters long');
+			return;
+		}
+
 		try {
 			// Upload image first if selected
 			let profilePhotoUrl = null;
@@ -179,6 +218,10 @@ const AddEmployee = () => {
 				return;
 			}
 
+			// Log the data being sent
+			console.log('Employee data being sent:', employeeData);
+			console.log('API URL:', `${import.meta.env.VITE_API_BASE_URL}/api/employees`);
+
 			// Send data to backend
 			const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/employees`, {
 				method: 'POST',
@@ -188,7 +231,18 @@ const AddEmployee = () => {
 				body: JSON.stringify(employeeData)
 			});
 
+			console.log('Response status:', response.status);
+			console.log('Response headers:', response.headers);
+
+			if (!response.ok) {
+				const errorText = await response.text();
+				console.error('HTTP Error Response:', errorText);
+				alert(`Server Error (${response.status}): ${errorText || 'Failed to add employee'}`);
+				return;
+			}
+
 			const result = await response.json();
+			console.log('Server response:', result);
 
 			if (result.success) {
 				alert('Employee added successfully!');
@@ -228,10 +282,19 @@ const AddEmployee = () => {
 					confirmPassword: ''
 				});
 			} else {
-				alert(`Error: ${result.message || 'Failed to add employee'}`);
+				console.error('Server returned error:', result);
+				let errorMessage = `Error: ${result.message || 'Failed to add employee'}`;
+				
 				if (result.errors) {
 					console.error('Validation errors:', result.errors);
+					if (Array.isArray(result.errors)) {
+						errorMessage += '\n\nValidation Errors:\n' + result.errors.join('\n');
+					} else if (typeof result.errors === 'object') {
+						errorMessage += '\n\nValidation Errors:\n' + Object.entries(result.errors).map(([field, error]) => `${field}: ${error}`).join('\n');
+					}
 				}
+				
+				alert(errorMessage);
 			}
 		} catch (error) {
 			console.error('Error submitting form:', error);
@@ -320,6 +383,7 @@ const AddEmployee = () => {
 															value={formData.firstName}
 															onChange={handleInputChange}
 															placeholder="First Name *"
+															required
 														/>
 													</div>
 												</div>
@@ -332,6 +396,7 @@ const AddEmployee = () => {
 															value={formData.lastName}
 															onChange={handleInputChange}
 															placeholder="Last Name *"
+															required
 														/>
 													</div>
 												</div>
@@ -344,6 +409,7 @@ const AddEmployee = () => {
 															value={formData.email}
 															onChange={handleInputChange}
 															placeholder="Email *"
+															required
 														/>
 													</div>
 												</div>
@@ -356,6 +422,7 @@ const AddEmployee = () => {
 															value={formData.contactNumber}
 															onChange={handleInputChange}
 															placeholder="Contact Number *"
+															required
 														/>
 													</div>
 												</div>
@@ -368,6 +435,7 @@ const AddEmployee = () => {
 															value={formData.empCode}
 															onChange={handleInputChange}
 															placeholder="Emp Code *"
+															required
 														/>
 													</div>
 												</div>
@@ -377,14 +445,14 @@ const AddEmployee = () => {
 														<div className="input-groupicon calender-input">
 															<i data-feather="calendar" className="info-img"></i>
 															<input
-																type="text"
-																className="form-control"
-																name="dateOfBirth"
-																placeholder="Date of Birth"
-																value={formData.dateOfBirth}
-																onChange={handleInputChange}
-															/>
-
+																	type="date"
+																	className="form-control"
+																	name="dateOfBirth"
+																	value={formData.dateOfBirth}
+																	onChange={handleInputChange}
+																	// placeholder="Select Date"
+																	required
+																/>
 														</div>
 													</div>
 												</div>
@@ -441,13 +509,14 @@ const AddEmployee = () => {
 														<div className="input-groupicon calender-input">
 															<i data-feather="calendar" className="info-img"></i>
 															<input
-																type="date"
-																className="form-control"
-																name="joiningDate"
-																value={formData.joiningDate}
-																onChange={handleInputChange}
-																placeholder="Select Date"
-															/>
+																	type="date"
+																	className="form-control"
+																	name="joiningDate"
+																	value={formData.joiningDate}
+																	onChange={handleInputChange}
+																	placeholder="Select Date"
+																	required
+																/>
 														</div>
 													</div>
 												</div>
@@ -869,29 +938,41 @@ const AddEmployee = () => {
 										<div className="pass-info">
 											<div className="row">
 												<div className="col-lg-11 col-md-6">
-													<div className="input-blocks mb-md-0 mb-sm-3">
-														<input
-															type="password"
-															className="form-control"
-															name="password"
-															value={formData.password}
-															onChange={handleInputChange}
-															placeholder="Password"
-														/>
-													</div>
+											<div className="input-blocks mb-md-0 mb-sm-3">
+												<div className="input-group">
+													<input
+														type={showPassword ? "text" : "password"}
+														className="form-control"
+														name="password"
+														value={formData.password}
+														onChange={handleInputChange}
+														placeholder="Password"
+														required
+													/>
+													<span className="input-group-text" style={{ cursor: 'pointer' }} onClick={() => setShowPassword(!showPassword)}>
+														<i className={`ti ${showPassword ? 'ti-eye' : 'ti-eye-off'}`}></i>
+													</span>
 												</div>
+											</div>
+										</div>
 												<div className="col-lg-11 col-md-6">
-													<div className="input-blocks mb-0">
-														<input
-															type="password"
-															className="form-control"
-															name="confirmPassword"
-															value={formData.confirmPassword}
-															onChange={handleInputChange}
-															placeholder="Confirm Password"
-														/>
-													</div>
+											<div className="input-blocks mb-0">
+												<div className="input-group">
+													<input
+														type={showConfirmPassword ? "text" : "password"}
+														className="form-control"
+														name="confirmPassword"
+														value={formData.confirmPassword}
+														onChange={handleInputChange}
+														placeholder="Confirm Password"
+														required
+													/>
+													<span className="input-group-text" style={{ cursor: 'pointer' }} onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+														<i className={`ti ${showConfirmPassword ? 'ti-eye' : 'ti-eye-off'}`}></i>
+													</span>
 												</div>
+											</div>
+										</div>
 											</div>
 										</div>
 									</div>

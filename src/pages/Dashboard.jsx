@@ -3,18 +3,18 @@ import React from 'react';
 const Dashboard = () => {
   return (
    <>
-   <div class="page-wrapper">
-				<div class="content">
-					<div class="d-lg-flex align-items-center justify-content-between mb-4">
+   <div className="page-wrapper">
+				<div className="content">
+					<div className="d-lg-flex align-items-center justify-content-between mb-4">
 						<div>
-							<h3 class="mb-1">Welcome, Admin</h3>
+							<h3 className="mb-1">Welcome, Admin</h3>
 							<p>You have <span class="text-primary fw-bold">200+</span> Orders, Today</p>
 						</div>
-						<ul class="table-top-head">
+						<ul className="table-top-head">
 							<li>
-								<div class="input-icon-start position-relative">
-									<span class="input-icon-addon fs-16 text-gray-9">
-										<i class="ti ti-calendar"></i>
+								<div className="input-icon-start position-relative">
+									<span className="input-icon-addon fs-16 text-gray-9">
+										<i className="ti ti-calendar"></i>
 									</span>
 									<input type="text" className="form-control date-range bookingrange" placeholder="Search Product" />
 								</div>

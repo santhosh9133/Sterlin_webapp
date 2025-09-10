@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard';
 import Employee from './pages/Employee';
 import AddEmployee from './pages/AddEmployee';
 import Employee_details from './pages/Employee_details';
+import Department from './pages/Department';
 
 function Layout({ children }) {
   return (
@@ -61,6 +62,17 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
+         <Route
+          path="/department"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Department />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/add-employee"
           element={

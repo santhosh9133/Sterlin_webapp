@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const AddEmployee = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+	const [departments, setDepartments] = useState([]);
 	const [formData, setFormData] = useState({
 		firstName: '',
 		lastName: '',
@@ -42,6 +43,25 @@ const AddEmployee = () => {
 	const [imagePreview, setImagePreview] = useState(null);
 	const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
 	const [imageUploading, setImageUploading] = useState(false);
+
+	// Fetch departments on component mount
+	useEffect(() => {
+		const fetchDepartments = async () => {
+			try {
+				const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/departments/active`);
+				if (response.ok) {
+					const data = await response.json();
+					setDepartments(data.data || []);
+				} else {
+					console.error('Failed to fetch departments');
+				}
+			} catch (error) {
+				console.error('Error fetching departments:', error);
+			}
+		};
+
+		fetchDepartments();
+	}, []);
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
@@ -547,25 +567,26 @@ const AddEmployee = () => {
 													<div className="mb-3">
 														{/* <label className="form-label">Department<span className="text-danger ms-1">*</span></label> */}
 														<select
-															className="form-select"
-															name="department"
-															value={formData.department}
-															onChange={handleInputChange}
-															style={{
-																padding: '0.75rem',
-																border: '1px solid #ddd',
-																borderRadius: '0.375rem',
-																fontSize: '1rem',
-																backgroundColor: '#fff',
-																cursor: 'pointer'
-															}}
-														>
-															<option value="">Department</option>
-															<option value="UI/UX">UI/UX</option>
-															<option value="Support">Support</option>
-															<option value="HR">HR</option>
-															<option value="Engineering">Engineering</option>
-														</select>
+																						className="form-select"
+																						name="department"
+																						value={formData.department}
+																						onChange={handleInputChange}
+																						style={{
+																							padding: '0.75rem',
+																							border: '1px solid #ddd',
+																							borderRadius: '0.375rem',
+																							fontSize: '1rem',
+																							backgroundColor: '#fff',
+																							cursor: 'pointer'
+																						}}
+																					>
+																						<option value="">Department</option>
+																						{departments.map((dept) => (
+																							<option key={dept._id} value={dept.name}>
+																								{dept.name} ({dept.departmentId})
+																							</option>
+																						))}
+																					</select>
 													</div>
 												</div>
 												<div className="col-lg-11 col-md-6">

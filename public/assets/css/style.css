@@ -33375,7 +33375,7 @@ body.layout-mode-rtl .user-info {
 .dash-count {
   background: #FE9F43;
   color: #ffffff;
-  min-height: 98px;
+  min-height: 75px;
   width: 100%;
   border-radius: 6px;
   display: -webkit-box;
@@ -33388,7 +33388,7 @@ body.layout-mode-rtl .user-info {
   -webkit-justify-content: space-between;
   -ms-flex-pack: space-between;
   margin: 0 0 25px;
-  padding: 20px;
+  padding: 10px 20px;
 }
 .dash-count.das1 {
   background: #3FB6D9;

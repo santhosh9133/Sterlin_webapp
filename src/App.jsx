@@ -36,8 +36,8 @@ function AppContent() {
     <>
       <Routes>
         {/* Public routes */}
-        <Route path="/" element={<Navigate to="/register" />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Navigate to="/login" />} />
+        {/* <Route path="/register" element={<Register />} /> */}
         <Route path="/login" element={<Login />} />
 
         {/* Protected Routes */}

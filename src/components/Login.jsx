@@ -66,8 +66,10 @@ const Login = () => {
     width: "48%",
     // backgroundColor: "lightgreen",
     padding: "10px",
-    marginTop: "20%",
+    marginTop: "1%",
     verticalAlign: "top",
+    // borderRadius: "10px",
+
   };
   
     return (
@@ -76,6 +78,10 @@ const Login = () => {
 				<div className="login-wrapper login-new">
                     <div className="row w-100">
                         <div className="col-lg-11 mx-auto">
+                              <div className='card-body p-5' style={divStyle2}>
+                                 <img src='assets/img/company/sterline-1.jpg' style={{borderRadius: "10px"}}></img>
+                                 <marquee direction="left" scrollamount="5" style={{"fontSize": "20px", "color" : "#4a785f"}}>Welcome to Sterline Bioremidies</marquee>
+                            </div>
                             <div className="login-content user-login" style={divStyle1}>
                                 <form onSubmit={handleSubmit} >
                                     <div className="card">
@@ -145,23 +151,12 @@ const Login = () => {
                                                     {loading ? 'Signing In...' : 'Sign In'}
                                                 </button>
                                             </div>
-                                            <div className="signinform">
+                                            {/* <div className="signinform">
                                                 <h4>New on our platform?<Link to="/register" className="hover-a"> Create an account</Link></h4>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </form>
-                            </div>
-                            <div className='card-body p-5' style={divStyle2}>
-                                 <div className="login-logo">
-                                    <img src="assets/img/image.png" alt="img" />
-                                    <a href="index-2.html" className="login-logo logo-white">
-                                        <img src="assets/img/logo-white.svg"  alt="Img" />
-                                    </a>
-                                </div>
-                            <div className="my-4 d-flex justify-content-center align-items-center copyright-text">
-                                <p>Copyright &copy; 2025 DreamsPOS</p>
-                            </div>
                             </div>
                         </div>
                     </div>

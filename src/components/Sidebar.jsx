@@ -80,17 +80,19 @@ const Sidebar = () => {
 					<div id="sidebar-menu" className="sidebar-menu">
 						<ul>
 							<li className="submenu-open">
-								<h6 className="submenu-hdr">Main</h6>
+								{/* <h6 className="submenu-hdr">Main</h6> */}
+								<h6 className="submenu-hdr text-start">Menu</h6>
 								<ul>
 									<li className="submenu">
 										<Link to={"/dashboard"}><i className="ti ti-layout-grid fs-16 me-2"></i><span>Dashboard</span></Link>
+									<li className="active"><Link to={"/employee"}><i className="ti ti-user fs-16 me-2"></i><span>Employees</span></Link></li>
+
 									</li>
 								</ul>
 							</li>
 							<li className="submenu-open">
-								<h6 className="submenu-hdr">HRM</h6>
+								{/* <h6 className="submenu-hdr">HRM</h6> */}
 								<ul>
-									<li className="active"><Link to={"/employee"}><i className="ti ti-user fs-16 me-2"></i><span>Employees</span></Link></li>
 									{/* <li><Link to="/"><i className="ti ti-compass fs-16 me-2"></i><span>Departments</span></Link></li>
 									<li><Link to="/"><i className="ti ti-git-merge fs-16 me-2"></i><span>Designation</span></Link></li>
                                     <li><Link to="/"><i className="ti ti-arrows-shuffle fs-16 me-2"></i><span>Shifts</span></Link></li>

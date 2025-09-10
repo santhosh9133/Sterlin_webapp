@@ -187,7 +187,7 @@ const Employee = () => {
 							<div className="table-top">
 								<div className="search-set">
 									<div className="search-input">
-										<a href="" className="btn btn-searchset"><i data-feather="search" className="feather-search"></i></a>
+										<a href="#" className="btn btn-searchset"><i data-feather="search" className="feather-search"></i></a>
 									</div>
 								</div>
 								<div className="wordset">
@@ -198,9 +198,9 @@ const Employee = () => {
 										<li>
 											<a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img src="assets/img/icons/excel.svg" alt="img" /></a>
 										</li>
-										<li>
+										{/* <li>
 											<a data-bs-toggle="tooltip" data-bs-placement="top" title="print"><i data-feather="printer" className="feather-rotate-ccw"></i></a>
-										</li>
+										</li> */}
 									</ul>
 								</div>
 							</div>
@@ -228,7 +228,7 @@ const Employee = () => {
 				</div>
 				<div className="footer d-sm-flex align-items-center justify-content-between border-top bg-white p-3">
 					<p className="mb-0"> 2025 &copy; RichhMindx. All Right Reserved</p>
-					<p>Designed &amp; Developed by <a href="http://richhmindx.com/" className="text-primary">RichhMindx</a></p>
+					<p>Designed &amp; Developed by <a href="#" className="text-primary">RichhMindx</a></p>
 				</div>
 			</div>
     </>

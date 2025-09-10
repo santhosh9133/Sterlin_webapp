@@ -254,14 +254,6 @@ const Register = () => {
                                     </a>
                                 </div>
                                 <div className="div_cuntent" style={{padding: '20px', lineHeight: '1.6'}}>
-                                    S – Sustainability <br/>
-                                    T – Technology <br/>
-                                    E – Eco-Innovation <br/>
-                                    R – Remediation <br/>
-                                    L – Leadership <br/>
-                                    I – Integrity <br/>
-                                    N – Nature-Centric <br/>
-                                    E – Excellence <br/>
                                 </div>
                                 <div className="my-4 d-flex justify-content-center align-items-center copyright-text">
                                     <p>Copyright &copy; 2025 Richhmindx</p>

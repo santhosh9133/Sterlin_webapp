@@ -82,7 +82,7 @@ const Login = () => {
                                         <div className="card-body p-5">
                                             <div className="login-userheading">
                                                 <h3>Sign In</h3>
-                                                <h4>Access the Dreamspos panel using your email and passcode.</h4>
+                                                <h4>Access the Dashboard using your email and passcode.</h4>
                                             </div>
                                             {error && (
                                                 <div className="alert alert-danger" role="alert">

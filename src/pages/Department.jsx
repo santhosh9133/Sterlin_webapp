@@ -152,16 +152,6 @@ const Department = () => {
                             <i className="ti ti-circle-plus me-1"></i>Add Department
                         </button>
                     </div>
-                    <div className="page-btn me-2">
-                        <button
-                            type="button"
-                            className="btn btn-primary"
-                            data-bs-toggle="modal"
-                            data-bs-target="#add-designation"
-                        >
-                            <i className="ti ti-circle-plus me-1"></i>Add Designation
-                        </button>
-                    </div>
                 </div>
 
                 <div className="card">
@@ -352,7 +342,6 @@ const Department = () => {
                 </div>
             )}
             <AddDepartment />
-            <AddDesignation />
         </div>
     );
 };

@@ -12,6 +12,7 @@ import Employee from './pages/Employee';
 import AddEmployee from './pages/AddEmployee';
 import Employee_details from './pages/Employee_details';
 import Department from './pages/Department';
+import Designation from './pages/Designation';
 
 function Layout({ children }) {
   return (
@@ -68,6 +69,16 @@ function AppContent() {
             <ProtectedRoute>
               <Layout>
                 <Department />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/designation"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Designation />
               </Layout>
             </ProtectedRoute>
           }

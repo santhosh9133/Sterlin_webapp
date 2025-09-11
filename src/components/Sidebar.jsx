@@ -87,6 +87,7 @@ const Sidebar = () => {
 										<Link to={"/dashboard"}><i className="ti ti-layout-grid fs-16 me-2"></i><span>Dashboard</span></Link>
 									<li className="active"><Link to={"/employee"}><i className="ti ti-user fs-16 me-2"></i><span>Employees</span></Link></li>
 									<li><Link to={"/department"}><i className="ti ti-compass fs-16 me-2"></i><span>Department</span></Link></li>
+									<li><Link to={"/designation"}><i className="ti ti-git-merge fs-16 me-2"></i><span>Designation</span></Link></li>
 									</li>
 								</ul>
 							</li>

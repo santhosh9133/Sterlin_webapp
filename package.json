@@ -13,6 +13,7 @@
     "@fortawesome/fontawesome-free": "^7.0.1",
     "animate.css": "^4.1.1",
     "bootstrap": "^5.3.8",
+    "feather-icons": "^4.29.2",
     "quill": "^2.0.3",
     "react": "^19.1.1",
     "react-datepicker": "^8.7.0",

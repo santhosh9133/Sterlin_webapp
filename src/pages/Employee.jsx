@@ -3,68 +3,74 @@ import EmployeeCard from '../components/EmployeeCard'
 import { Link } from 'react-router-dom'
 
 const Employee = () => {
-  const [employees, setEmployees] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [stats, setStats] = useState({
-    total: 0,
-    active: 0,
-    inactive: 0,
-    newJoiners: 0
-  })
+	const [searchTerm, setSearchTerm] = useState('');
+	const [filteredEmployees, setFilteredEmployees] = useState([]);
+	const [employees, setEmployees] = useState([])
+	const [loading, setLoading] = useState(true)
+	const [error, setError] = useState(null)
+	const [stats, setStats] = useState({
+		total: 0,
+		active: 0,
+		inactive: 0,
+		newJoiners: 0
+	})
 
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        setLoading(true)
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/employees`)
-          
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`)
-          }
-          
-          const result = await response.json()
-          const data = result.data || []
-        setEmployees(data)
-        
-        // Calculate stats
-        const total = data.length
-        const active = data.filter(emp => emp.isActive === true).length
-        const inactive = data.filter(emp => emp.isActive === false).length
-        const newJoiners = data.filter(emp => {
-          const joinDate = new Date(emp.joinedDate)
-          const thirtyDaysAgo = new Date()
-          thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
-          return joinDate >= thirtyDaysAgo
-        }).length
-        
-        setStats({ total, active, inactive, newJoiners })
-      } catch (err) {
-        setError(err.message)
-      } finally {
-        setLoading(false)
-      }
-    }
+	useEffect(() => {
+		const fetchEmployees = async () => {
+			try {
+				setLoading(true)
+				const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/employees`)
 
-    fetchEmployees()
-  }, [])
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`)
+				}
 
-  if (loading) {
-    return <div className="d-flex justify-content-center align-items-center" style={{height: '400px'}}>
-      <div className="spinner-border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </div>
-    </div>
-  }
+				const result = await response.json()
+				const data = result.data || []
+				setEmployees(data)
 
-  if (error) {
-    return <div className="alert alert-danger" role="alert">
-      Error: {error}
-    </div>
-  }
+				// Calculate stats
+				const total = data.length
+				const active = data.filter(emp => emp.isActive === true).length
+				const inactive = data.filter(emp => emp.isActive === false).length
+				const newJoiners = data.filter(emp => {
+					const joinDate = new Date(emp.joinedDate)
+					const thirtyDaysAgo = new Date()
+					thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+					return joinDate >= thirtyDaysAgo
+				}).length
 
-  return (
-    <>
+				setStats({ total, active, inactive, newJoiners })
+			} catch (err) {
+				setError(err.message)
+			} finally {
+				setLoading(false)
+			}
+		}
+
+		fetchEmployees()
+	}, [])
+
+	useEffect(() => {
+		setFilteredEmployees(employees);
+	}, [employees]);
+
+	if (loading) {
+		return <div className="d-flex justify-content-center align-items-center" style={{ height: '400px' }}>
+			<div className="spinner-border" role="status">
+				<span className="visually-hidden">Loading...</span>
+			</div>
+		</div>
+	}
+
+	if (error) {
+		return <div className="alert alert-danger" role="alert">
+			Error: {error}
+		</div>
+	}
+
+	return (
+		<>
 			<div className="page-wrapper">
 				<div className="content">
 					<div className="page-header">
@@ -148,7 +154,13 @@ const Employee = () => {
 									<div className="d-flex align-items-center">
 										<div className="input-blocks me-2">
 											<div className="position-relative">
-												<input type="text" className="form-control ps-5" placeholder="Search Employee" />
+																	<input
+																		type="text"
+																		className="form-control ps-5 sr-width"
+																		placeholder="Search Employee by ID or Name"
+																		value={searchTerm}
+																		onChange={e => setSearchTerm(e.target.value)}
+																	/>
 												<div className="layout-hide-box search-form">
 													<span className="me-3"><i data-feather="search" className="feather-search"></i></span>
 												</div>
@@ -177,7 +189,30 @@ const Employee = () => {
 								<div className="col-sm-3 col-12">
 									<div className="d-flex align-items-center justify-content-sm-end">
 										<div className="input-blocks">
-											<a className="btn btn-filters ms-auto"> <i data-feather="filter" className="feather-filter"></i> Filter </a>
+											<button
+												className="btn btn-filters ms-auto"
+												type="button"
+												onClick={() => {
+													const term = searchTerm.trim().toLowerCase();
+													if (!term) {
+														setFilteredEmployees(employees);
+														return;
+													}
+													setFilteredEmployees(
+														employees.filter(emp => {
+															const empIdMatch = emp.empCode && emp.empCode.toLowerCase().includes(term);
+															const nameMatch = (
+																(emp.firstName && emp.firstName.toLowerCase().includes(term)) ||
+																(emp.lastName && emp.lastName.toLowerCase().includes(term)) ||
+																((emp.firstName && emp.lastName) && (`${emp.firstName} ${emp.lastName}`.toLowerCase().includes(term)))
+															);
+															return empIdMatch || nameMatch;
+														})
+													);
+												}}
+											>
+												<i data-feather="filter" className="feather-filter"></i> Filter
+											</button>
 										</div>
 									</div>
 								</div>
@@ -206,21 +241,21 @@ const Employee = () => {
 							</div>
 							<div className="employee-grid-widget">
 								<div className="employee-grid">
-  {employees.length === 0 ? (
-    <div className="col-12">
-      <div className="alert alert-warning text-center">
-        <h5>No employees found</h5>
-        <p>There are currently no employees in the system.</p>
-      </div>
-    </div>
-  ) : (
-    employees.map((employee) => (
-      <Link key={employee._id} to={`/employee_details/${employee._id}`}>
-        <EmployeeCard employee={employee} />
-      </Link>
-    ))
-  )}
-</div>
+									{filteredEmployees.length === 0 ? (
+										<div className="col-12">
+											<div className="alert alert-warning text-center">
+												<h5>No employees found</h5>
+												<p>There are currently no employees in the system.</p>
+											</div>
+										</div>
+									) : (
+										filteredEmployees.map((employee) => (
+											<Link key={employee._id} to={`/employee_details/${employee._id}`}>
+												<EmployeeCard employee={employee} />
+											</Link>
+										))
+									)}
+								</div>
 
 							</div>
 						</div>
@@ -231,8 +266,8 @@ const Employee = () => {
 					<p>Designed &amp; Developed by <a href="#" className="text-primary">RichhMindx</a></p>
 				</div>
 			</div>
-    </>
-  )
+		</>
+	)
 }
 
 export default Employee

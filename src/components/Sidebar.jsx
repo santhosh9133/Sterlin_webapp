@@ -7,7 +7,7 @@ const Sidebar = () => {
       <div className="sidebar" id="sidebar">
 				{/* <!-- Logo --> */}
 				<div className="sidebar-logo">
-					<a href="/" className="logo logo-normal">
+					<a href="/dashboard" className="logo logo-normal">
 						<img src="assets/img/image.png" alt="Img" style={{height:"50px", width:"60px"}}/>
 					</a>
 					<Link to="/" className="logo logo-white">
@@ -83,7 +83,7 @@ const Sidebar = () => {
 								{/* <h6 className="submenu-hdr">Main</h6> */}
 								<h6 className="submenu-hdr text-start">Menu</h6>
 								<ul>
-									<li className="submenu">
+									<li className=''>
 										<Link to={"/dashboard"}><i className="ti ti-layout-grid fs-16 me-2"></i><span>Dashboard</span></Link>
 									<li className="active"><Link to={"/employee"}><i className="ti ti-user fs-16 me-2"></i><span>Employees</span></Link></li>
 									<li><Link to={"/department"}><i className="ti ti-compass fs-16 me-2"></i><span>Department</span></Link></li>

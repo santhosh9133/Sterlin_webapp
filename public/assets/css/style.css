@@ -6044,7 +6044,7 @@ hr.text-danger {
   font-weight: 400;
   line-height: 1.6;
   border-radius: 0.35rem;
-  padding: 0.45rem 0.85rem;
+  padding: 0.45rem 0.85rem;  
 }
 .form-control:focus {
   box-shadow: none;
@@ -11189,7 +11189,7 @@ svg.collapse-open, svg.collapse-close {
   height: 20px;
   border: 0;
   font-weight: 700;
-  background-color: #FF0000;
+  /* background-color: #FF0000; */
   border-radius: 50px;
 }
 .modal .close:hover,

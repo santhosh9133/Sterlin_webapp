@@ -10,6 +10,16 @@
   background-color: #e3f5f1 !important;
 }
 
+/* Styling for the delete button in the Department component */
+.del-dep {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   z-index: 2;
+}
+.sr-width{ min-width: 300px; max-width: 400px; }
+
+
 /* Hover effects for input fields */
 .login-wrapper .login-content .form-control,
 .login-wrapper .login-content input[type="text"],

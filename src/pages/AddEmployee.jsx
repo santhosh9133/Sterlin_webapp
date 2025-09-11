@@ -353,11 +353,11 @@ const AddEmployee = () => {
 						</div>
 						<ul className="table-top-head">
 							<li className="me-2">
-								<a data-bs-toggle="tooltip" data-bs-placement="top" title="Refresh"><i className="ti ti-refresh"></i></a>
+								<a data-bs-toggle="tooltip" href="/add-employee" data-bs-placement="top" title="Refresh"><i className="ti ti-refresh"></i></a>
 							</li>
-							<li className="me-2">
+							{/* <li className="me-2">
 								<a data-bs-toggle="tooltip" data-bs-placement="top" title="Collapse" id="collapse-header"><i className="ti ti-chevron-up"></i></a>
-							</li>
+							</li> */}
 						</ul>
 						<div className="page-btn">
 							<Link to={"/employee"} className="btn btn-secondary"><i data-feather="arrow-left" className="me-2"></i>Back to List</Link>

@@ -344,7 +344,7 @@ const Header = () => {
 								<a className="dropdown-item" href="sales-report.html"><i className="ti ti-file-text me-2"></i>Reports</a>
 								<a className="dropdown-item" href="general-settings.html"><i className="ti ti-settings-2 me-2"></i>Settings</a>
 								{/* <hr className="my-2"> */}
-								<a className="dropdown-item logout pb-0" href="signin.html"><i className="ti ti-logout me-2"></i>Logout</a>
+								<Link className="dropdown-item logout pb-0" to={"/login"}><i className="ti ti-logout me-2"></i>Logout</Link>
 							</div>
 						</li>
 					</ul>

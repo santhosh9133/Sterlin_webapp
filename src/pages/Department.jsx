@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import AddDepartment from "./AddDepartment";
+import AddDesignation from "./AddDesignation"; // Import AddDesignation component
 
 const Department = () => {
     const [departments, setDepartments] = useState([]);
+    const [designations, setDesignations] = useState([]); // For future use (optional display)
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
@@ -16,9 +17,9 @@ const Department = () => {
     const fetchDepartments = async () => {
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:5001/api/departments?limit=50');
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/departments`);
             const data = await response.json();
-            
+
             if (data.success) {
                 setDepartments(data.data);
             } else {
@@ -42,12 +43,12 @@ const Department = () => {
 
     const filteredDepartments = departments.filter(dept => {
         const matchesSearch = dept.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            dept.departmentId.toLowerCase().includes(searchTerm.toLowerCase());
-        
-        const matchesStatus = statusFilter === '' || 
-                            (statusFilter === 'active' && dept.isActive) ||
-                            (statusFilter === 'inactive' && !dept.isActive);
-        
+            dept.departmentId.toLowerCase().includes(searchTerm.toLowerCase());
+
+        const matchesStatus = statusFilter === '' ||
+            (statusFilter === 'active' && dept.isActive) ||
+            (statusFilter === 'inactive' && !dept.isActive);
+
         return matchesSearch && matchesStatus;
     });
 
@@ -58,12 +59,27 @@ const Department = () => {
                     <div className="add-item d-flex">
                         <div className="page-title">
                             <h4>Departments</h4>
-                            <h6>Manage your departments</h6>
+                            <h6>Manage your departments and designations</h6>
                         </div>
                     </div>
                     <div className="page-btn">
-                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-department">
+                        <button
+                            type="button"
+                            className="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#add-department"
+                        >
                             <i className="ti ti-circle-plus me-1"></i>Add Department
+                        </button>
+                    </div>
+                     <div className="page-btn me-2">
+                        <button
+                            type="button"
+                            className="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#add-designation"
+                        >
+                            <i className="ti ti-circle-plus me-1"></i>Add Designation
                         </button>
                     </div>
                 </div>
@@ -76,10 +92,10 @@ const Department = () => {
                                     <span className="btn-searchset">
                                         <i className="ti ti-search fs-14 feather-search"></i>
                                     </span>
-                                    <input 
-                                        type="search" 
-                                        className="form-control" 
-                                        placeholder="Search departments..." 
+                                    <input
+                                        type="search"
+                                        className="form-control"
+                                        placeholder="Search departments..."
                                         value={searchTerm}
                                         onChange={handleSearch}
                                     />
@@ -170,7 +186,10 @@ const Department = () => {
                     </div>
                 )}
             </div>
+
+            {/* Modals */}
             <AddDepartment />
+            <AddDesignation />
         </div>
     );
 };

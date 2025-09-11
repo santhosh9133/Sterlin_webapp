@@ -5,6 +5,7 @@ const AddEmployee = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 	const [departments, setDepartments] = useState([]);
+	const [designations, setDesignations] = useState([]);
 	const [formData, setFormData] = useState({
 		firstName: '',
 		lastName: '',
@@ -62,6 +63,23 @@ const AddEmployee = () => {
 
 		fetchDepartments();
 	}, []);
+	useEffect(() => {
+		const fetchDesignations = async () => {
+			try {
+				const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/designations/active`);
+				if (response.ok) {
+					const data = await response.json();
+					setDesignations(data.data || []);
+				} else {
+					console.error('Failed to fetch designations');
+				}
+			} catch (error) {
+				console.error('Error fetching designations:', error);
+			}
+		};
+
+		fetchDesignations();
+	}, []);
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
@@ -105,7 +123,7 @@ const AddEmployee = () => {
 			const formData = new FormData();
 			formData.append('profileImage', selectedImage);
 
-			console.log('Uploading to:', 'http://localhost:5001/api/employees/upload-profile-image');
+			console.log('Uploading to:', `${import.meta.env.VITE_API_BASE_URL}/api/employees/upload-profile-image`);
 			const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/employees/upload-profile-image`, {
 				method: 'POST',
 				body: formData
@@ -304,7 +322,7 @@ const AddEmployee = () => {
 			} else {
 				console.error('Server returned error:', result);
 				let errorMessage = `Error: ${result.message || 'Failed to add employee'}`;
-				
+
 				if (result.errors) {
 					console.error('Validation errors:', result.errors);
 					if (Array.isArray(result.errors)) {
@@ -313,7 +331,7 @@ const AddEmployee = () => {
 						errorMessage += '\n\nValidation Errors:\n' + Object.entries(result.errors).map(([field, error]) => `${field}: ${error}`).join('\n');
 					}
 				}
-				
+
 				alert(errorMessage);
 			}
 		} catch (error) {
@@ -465,14 +483,14 @@ const AddEmployee = () => {
 														<div className="input-groupicon calender-input">
 															<i data-feather="calendar" className="info-img"></i>
 															<input
-																	type="date"
-																	className="form-control"
-																	name="dateOfBirth"
-																	value={formData.dateOfBirth}
-																	onChange={handleInputChange}
-																	// placeholder="Select Date"
-																	required
-																/>
+																type="date"
+																className="form-control"
+																name="dateOfBirth"
+																value={formData.dateOfBirth}
+																onChange={handleInputChange}
+																// placeholder="Select Date"
+																required
+															/>
 														</div>
 													</div>
 												</div>
@@ -529,14 +547,14 @@ const AddEmployee = () => {
 														<div className="input-groupicon calender-input">
 															<i data-feather="calendar" className="info-img"></i>
 															<input
-																	type="date"
-																	className="form-control"
-																	name="joiningDate"
-																	value={formData.joiningDate}
-																	onChange={handleInputChange}
-																	placeholder="Select Date"
-																	required
-																/>
+																type="date"
+																className="form-control"
+																name="joiningDate"
+																value={formData.joiningDate}
+																onChange={handleInputChange}
+																placeholder="Select Date"
+																required
+															/>
 														</div>
 													</div>
 												</div>
@@ -567,26 +585,26 @@ const AddEmployee = () => {
 													<div className="mb-3">
 														{/* <label className="form-label">Department<span className="text-danger ms-1">*</span></label> */}
 														<select
-																						className="form-select"
-																						name="department"
-																						value={formData.department}
-																						onChange={handleInputChange}
-																						style={{
-																							padding: '0.75rem',
-																							border: '1px solid #ddd',
-																							borderRadius: '0.375rem',
-																							fontSize: '1rem',
-																							backgroundColor: '#fff',
-																							cursor: 'pointer'
-																						}}
-																					>
-																						<option value="">Department</option>
-																						{departments.map((dept) => (
-																							<option key={dept._id} value={dept.name}>
-																								{dept.name} ({dept.departmentId})
-																							</option>
-																						))}
-																					</select>
+															className="form-select"
+															name="department"
+															value={formData.department}
+															onChange={handleInputChange}
+															style={{
+																padding: '0.75rem',
+																border: '1px solid #ddd',
+																borderRadius: '0.375rem',
+																fontSize: '1rem',
+																backgroundColor: '#fff',
+																cursor: 'pointer'
+															}}
+														>
+															<option value="">Department</option>
+															{departments.map((dept) => (
+																<option key={dept._id} value={dept.department}>
+																	{dept.name}
+																</option>
+															))}
+														</select>
 													</div>
 												</div>
 												<div className="col-lg-11 col-md-6">
@@ -607,10 +625,13 @@ const AddEmployee = () => {
 															}}
 														>
 															<option value="">Designation</option>
-															<option value="Designer">Designer</option>
-															<option value="Developer">Developer</option>
-															<option value="Tester">Tester</option>
+															{designations.map((desig) => (
+																<option key={desig._id} value={desig.designation}>
+																	{desig.name}
+																</option>
+															))}
 														</select>
+
 													</div>
 												</div>
 												<div className="col-lg-11 col-md-6">
@@ -727,7 +748,7 @@ const AddEmployee = () => {
 																cursor: 'pointer'
 															}}
 														>
-															<option value="" disabled selected hidden>State</option>
+														    <option value="selected" selected>State</option>
 															<option value="Andhra Pradesh">Andhra Pradesh</option>
 															<option value="Arunachal Pradesh">Arunachal Pradesh</option>
 															<option value="Assam">Assam</option>
@@ -959,41 +980,41 @@ const AddEmployee = () => {
 										<div className="pass-info">
 											<div className="row">
 												<div className="col-lg-11 col-md-6">
-											<div className="input-blocks mb-md-0 mb-sm-3">
-												<div className="input-group">
-													<input
-														type={showPassword ? "text" : "password"}
-														className="form-control"
-														name="password"
-														value={formData.password}
-														onChange={handleInputChange}
-														placeholder="Password"
-														required
-													/>
-													<span className="input-group-text" style={{ cursor: 'pointer' }} onClick={() => setShowPassword(!showPassword)}>
-														<i className={`ti ${showPassword ? 'ti-eye' : 'ti-eye-off'}`}></i>
-													</span>
+													<div className="input-blocks mb-md-0 mb-sm-3">
+														<div className="input-group">
+															<input
+																type={showPassword ? "text" : "password"}
+																className="form-control"
+																name="password"
+																value={formData.password}
+																onChange={handleInputChange}
+																placeholder="Password"
+																required
+															/>
+															<span className="input-group-text" style={{ cursor: 'pointer' }} onClick={() => setShowPassword(!showPassword)}>
+																<i className={`ti ${showPassword ? 'ti-eye' : 'ti-eye-off'}`}></i>
+															</span>
+														</div>
+													</div>
 												</div>
-											</div>
-										</div>
 												<div className="col-lg-11 col-md-6">
-											<div className="input-blocks mb-0">
-												<div className="input-group">
-													<input
-														type={showConfirmPassword ? "text" : "password"}
-														className="form-control"
-														name="confirmPassword"
-														value={formData.confirmPassword}
-														onChange={handleInputChange}
-														placeholder="Confirm Password"
-														required
-													/>
-													<span className="input-group-text" style={{ cursor: 'pointer' }} onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-														<i className={`ti ${showConfirmPassword ? 'ti-eye' : 'ti-eye-off'}`}></i>
-													</span>
+													<div className="input-blocks mb-0">
+														<div className="input-group">
+															<input
+																type={showConfirmPassword ? "text" : "password"}
+																className="form-control"
+																name="confirmPassword"
+																value={formData.confirmPassword}
+																onChange={handleInputChange}
+																placeholder="Confirm Password"
+																required
+															/>
+															<span className="input-group-text" style={{ cursor: 'pointer' }} onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+																<i className={`ti ${showConfirmPassword ? 'ti-eye' : 'ti-eye-off'}`}></i>
+															</span>
+														</div>
+													</div>
 												</div>
-											</div>
-										</div>
 											</div>
 										</div>
 									</div>

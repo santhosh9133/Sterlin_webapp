@@ -42,7 +42,7 @@ const Login = () => {
                 // Store user data in localStorage or context
                 localStorage.setItem('user', JSON.stringify(data.user));
                 localStorage.setItem('token', data.token);
-                alert('Login successful!');
+                // alert('Login successful!');
                 navigate('/dashboard');
             } else {
                 setError(data.message || 'Login failed');

@@ -250,9 +250,7 @@ const Employee = () => {
 										</div>
 									) : (
 										filteredEmployees.map((employee) => (
-											<Link key={employee._id} to={`/employee_details/${employee._id}`}>
-												<EmployeeCard employee={employee} />
-											</Link>
+											<EmployeeCard key={employee._id} employee={employee} />
 										))
 									)}
 								</div>

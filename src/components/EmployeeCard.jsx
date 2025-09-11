@@ -81,11 +81,22 @@ const EmployeeCard = ({ employee }) => {
             </div>
           </div>
           <div className="text-center">
-            <p className="text-primary mb-2">EMP ID : {employee.empCode || 'N/A'}</p>
+              {employee.empCode ? (
+              <a href={`/employee_details/${employee._id}`} style={{ textDecoration: 'none' }}>
+                <p className="text-primary mb-2" style={{ cursor: 'pointer' }}>EMP ID : {employee.empCode}</p>
+              </a>
+            ) : (
+              <p className="text-primary mb-2">EMP ID : N/A</p>
+            )}
           </div>
           <div className="text-center mb-3">
             <h6 className="mb-1">
-              {employee.firstName || 'Unknown'} {employee.lastName || ''}
+              {employee.firstName || 'Unknown'}{' '}
+              {employee.lastName ? (
+                <a href={`/employee_details/${employee._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <span style={{ cursor: 'pointer' }}>{employee.lastName}</span>
+                </a>
+              ) : ''}
             </h6>
             <div className="d-flex justify-content-center gap-2 mb-2">
               <span className="badge bg-secondary-transparent text-gray-9 fs-10 fw-medium">

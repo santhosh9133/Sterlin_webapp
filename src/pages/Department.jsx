@@ -217,7 +217,7 @@ const Department = () => {
                                                         <h5 className={department.isActive ? 'active' : 'text-muted'}>
                                                             {department.name}
                                                         </h5>
-                                                        <span className="ms-2" style={{ color: 'black', background: 'none', fontWeight: 'bold' }}>-{department.departmentId}</span>
+                                                        {/* <span className="ms-2" style={{ color: 'black', background: 'none', fontWeight: 'bold' }}>-{department.departmentId}</span> */}
                                                     </div>
                                                     {/* <button
                                                         className="btn btn-danger btn-xs del-dep"
@@ -290,7 +290,7 @@ const Department = () => {
                             <form onSubmit={handleUpdateSubmit}>
                                 <div className="modal-body">
                                     {updateError && <div className="alert alert-danger">{updateError}</div>}
-                                    <div className="mb-3">
+                                    {/* <div className="mb-3">
                                         <label className="form-label">Department ID</label>
                                         <input
                                             type="text"
@@ -300,7 +300,7 @@ const Department = () => {
                                             onChange={handleUpdateChange}
                                             required
                                         />
-                                    </div>
+                                    </div> */}
                                     <div className="mb-3">
                                         <label className="form-label">Name</label>
                                         <input
